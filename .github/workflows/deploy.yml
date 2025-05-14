@@ -25,7 +25,9 @@ jobs:
           pip install pytest moto boto3
 
       - name: Run tests
-        run: pytest tests/
+        run: |
+          export PYTHONPATH=.
+          pytest tests/
 
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
