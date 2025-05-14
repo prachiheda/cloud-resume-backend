@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Cloud Resume Challenge Backend
+
+Globals:
+  Function:
+    Timeout: 10
+    Runtime: python3.11
+    Handler: lambda_function.lambda_handler
+
+Resources:
+  ViewCounterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      MemorySize: 128
+      Policies:
+        - AmazonDynamoDBFullAccess
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            Path: /
+            Method: GET
+            ApiId: !Ref MyHttpApi
+  MyHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+        AllowOrigins:
+          - https://www.prachiheda.com
+          - https://prachiheda.com
+  ViewCounterTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: cloud-resume-challenge-managed2
+      AttributeDefinitions:
+        - AttributeName: viewCountKey
+          AttributeType: S
+      KeySchema:
+        - AttributeName: viewCountKey
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+Outputs:
+  ApiUrl:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${MyHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"

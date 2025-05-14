@@ -1,0 +1,8 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "cloud-resume-stack-v4"
+resolve_s3 = true
+s3_prefix = "cloud-resume-stack-v4"
+region = "us-east-2"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
