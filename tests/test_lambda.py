@@ -48,6 +48,10 @@ def test_lambda_handler_increment():
     # Call the lambda_handler function
     result = lambda_handler(event, None)
 
+    body = json.loads(result['body'])
+    result = body['count']
+
+
     # Assert the returned count is incremented
     assert result == 2
 
