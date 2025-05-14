@@ -1,4 +1,5 @@
 import os
+import json
 
 # Mock AWS credentials for moto
 os.environ['AWS_ACCESS_KEY_ID'] = 'testing'
